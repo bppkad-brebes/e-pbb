@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -63,7 +64,7 @@ public class ApiController {
     }
 
     @RequestMapping(value = "/android_service/sppt", method = RequestMethod.POST)
-    public List<SpptModif> getListSppt2(@RequestBody String data) {
+    public List<SpptModif> getListSppt2(@RequestBody String data, HttpServletResponse response) {
         String keyword = "", nop = "", subjekPajakId="", tahun="";
         String [] pairs = data.split("\\&");
         HashMap<String, String> param = new HashMap<>();
@@ -76,13 +77,14 @@ public class ApiController {
         nop = param.get("nop"); param.remove("nop");
 
         if(keyword.equals("sppt")) {
+            response.setHeader("Access-Control-Allow-Origin", "*");
             return spptService.getSppt(nop);
         }
         return null;
     }
 
     @RequestMapping(value = "/android_service", method = RequestMethod.POST)
-    public ReturnData getDataOp2(@RequestBody String data) {
+    public ReturnData getDataOp2(@RequestBody String data, HttpServletResponse response) {
         String keyword = "", nop = "", subjekPajakId="", tahun="";
         String [] pairs = data.split("\\&");
         HashMap<String, String> param = new HashMap<>();
@@ -96,6 +98,7 @@ public class ApiController {
         subjekPajakId = param.get("subjek_pajak_id"); param.remove("subjek_pajak_id");
         tahun = param.get("tahun"); param.remove("tahun");
 
+        response.setHeader("Access-Control-Allow-Origin", "*");
         if(keyword.equals("op")) {
             logger.trace("Request OP untuk NOP : " + nop);
             return datOpService.getOp(nop);

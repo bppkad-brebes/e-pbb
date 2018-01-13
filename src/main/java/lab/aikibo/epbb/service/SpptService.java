@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -27,9 +28,11 @@ public class SpptService {
     public List<SpptModif> getSppt(String nop) {
         List<SpptModif> result = new LinkedList();
 
-        List<Sppt> data = spptRepo.findByKdPropinsiAndKdDati2AndKdKecamatanAndKdKelurahanAndKdBlokAndNoUrutAndKdJnsOp(
+
+
+        List<Sppt> data = spptRepo.findByKdPropinsiAndKdDati2AndKdKecamatanAndKdKelurahanAndKdBlokAndNoUrutAndKdJnsOpAndStatusPembayaranSpptIn(
           nop.substring(0,2), nop.substring(2,4), nop.substring(4,7), nop.substring(7,10), nop.substring(10,13),
-          nop.substring(13,17), nop.substring(17,18), new Sort("thnPajakSppt")
+          nop.substring(13,17), nop.substring(17,18), new ArrayList<Character>() {{add('0'); add('1');}},new Sort("thnPajakSppt")
         );
 
         for(int i=0; i<data.size(); i++) {
@@ -55,11 +58,15 @@ public class SpptService {
         result.setTgl_skrg(dateFormatOut.print(new DateTime()));
         int selisih = Months.monthsBetween(new DateTime(data.getTglJatuhTempoSppt()), new DateTime()).getMonths();
         result.setDenda_bln(selisih);
-        result.setDenda_jml(
+        BigDecimal denda;
+
+        if(selisih >= 0)
+            result.setDenda_jml(
                 (selisih > 15) ?
                     (new BigDecimal("15").multiply(new BigDecimal("0.02")).multiply(data.getPbbYgHarusDibayarSppt())).round(new MathContext(3, RoundingMode.UP)) :
                     (new BigDecimal(selisih).multiply(new BigDecimal("0.02")).multiply(data.getPbbYgHarusDibayarSppt())).round(new MathContext(3, RoundingMode.UP))
-        );
+            );
+        else result.setDenda_jml(new BigDecimal("0"));
 
         return result;
     }
