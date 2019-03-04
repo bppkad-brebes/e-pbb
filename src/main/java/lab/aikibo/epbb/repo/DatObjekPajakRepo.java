@@ -12,4 +12,8 @@ import java.util.List;
 @Repository
 public interface DatObjekPajakRepo extends JpaRepository<DatObjekPajak, DatObjekPajakPK> {
 
+    DatObjekPajak findByKdKecamatanAndKdKelurahanAndKdBlokAndNoUrut(String kdKecamatan, String kdKelurahan,
+                                                                    String kdBlok, String noUrut);
+    List<DatObjekPajak> findBySubjekPajakId(String subjekPajakId);
+
 }

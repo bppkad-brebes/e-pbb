@@ -1,5 +1,6 @@
 package lab.aikibo.epbb.controller;
 
+import lab.aikibo.epbb.entity.DatObjekPajak;
 import lab.aikibo.epbb.entity.JsonObject;
 import lab.aikibo.epbb.service.DatObjekPajakService;
 import lab.aikibo.epbb.service.DatSubjekPajakService;
@@ -20,6 +21,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -111,6 +113,11 @@ public class ApiController {
         }
 
         return null;
+    }
+
+    @RequestMapping(value = "/find-op-by-nama", method = RequestMethod.POST)
+    public Map<String, List<DatObjekPajak>> findOpByNama(@RequestBody String nama, HttpServletResponse response) {
+        return datSpService.getListObjekPajakByNmWp(nama);
     }
 
 }
