@@ -124,6 +124,7 @@ public class ApiController {
      */
     @RequestMapping(value = "/find-op-by-nama", method = RequestMethod.POST)
     public Map<String, List<DatObjekPajak>> findOpByNama(@RequestBody String nama, HttpServletResponse response) {
+        System.out.println(nama);
         return datSpService.getListObjekPajakByNmWp(nama);
     }
 
