@@ -19,7 +19,7 @@ public interface SpptRepo extends PagingAndSortingRepository<Sppt, SpptPK> {
 
     List<Sppt> findByKdPropinsiAndKdDati2AndKdKecamatanAndKdKelurahanAndKdBlokAndNoUrutAndKdJnsOpAndStatusPembayaranSpptIn(
             String kdPropinsi, String kdDati2, String kdKecamatan, String kdKelurahan, String kdBlok,
-            String noUrut, String kdJnsOp, Collection<Character> status, Sort sort
+            String noUrut, String kdJnsOp, Collection<Character> status
     );
 
     Sppt findOneByKdPropinsiAndKdDati2AndKdKecamatanAndKdKelurahanAndKdBlokAndNoUrutAndKdJnsOpAndThnPajakSpptAndStatusPembayaranSppt(

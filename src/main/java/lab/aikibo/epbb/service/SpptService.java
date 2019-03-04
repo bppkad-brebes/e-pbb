@@ -29,11 +29,11 @@ public class SpptService {
         List<SpptModif> result = new LinkedList();
 
 
-
         List<Sppt> data = spptRepo.findByKdPropinsiAndKdDati2AndKdKecamatanAndKdKelurahanAndKdBlokAndNoUrutAndKdJnsOpAndStatusPembayaranSpptIn(
           nop.substring(0,2), nop.substring(2,4), nop.substring(4,7), nop.substring(7,10), nop.substring(10,13),
-          nop.substring(13,17), nop.substring(17,18), new ArrayList<Character>() {{add('0'); add('1');}},new Sort("thnPajakSppt")
+          nop.substring(13,17), nop.substring(17,18), new ArrayList<Character>() {{add('0'); add('1');}}//,new Sort("thnPajakSppt")
         );
+
 
         for(int i=0; i<data.size(); i++) {
             result.add(new SpptModif(data.get(i).getThnPajakSppt(), data.get(i).getPbbYgHarusDibayarSppt(),

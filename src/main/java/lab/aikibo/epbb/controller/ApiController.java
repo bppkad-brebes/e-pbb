@@ -1,5 +1,6 @@
 package lab.aikibo.epbb.controller;
 
+import lab.aikibo.epbb.entity.DatObjekPajak;
 import lab.aikibo.epbb.entity.JsonObject;
 import lab.aikibo.epbb.service.DatObjekPajakService;
 import lab.aikibo.epbb.service.DatSubjekPajakService;
@@ -20,6 +21,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -83,6 +85,7 @@ public class ApiController {
         return null;
     }
 
+
     @RequestMapping(value = "/android_service", method = RequestMethod.POST)
     public ReturnData getDataOp2(@RequestBody String data, HttpServletResponse response) {
         String keyword = "", nop = "", subjekPajakId="", tahun="";
@@ -111,6 +114,17 @@ public class ApiController {
         }
 
         return null;
+    }
+
+    /**
+     * Get Data SPPT by WP Name
+     * @param nama name that search for
+     * @param response just return header to set Access-Control-Allow-Origin to *
+     * @return Map of ID Number (KTP) as key, and list of object the he/she have or register as.
+     */
+    @RequestMapping(value = "/find-op-by-nama", method = RequestMethod.POST)
+    public Map<String, List<DatObjekPajak>> findOpByNama(@RequestBody String nama, HttpServletResponse response) {
+        return datSpService.getListObjekPajakByNmWp(nama);
     }
 
 }
